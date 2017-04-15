@@ -29,9 +29,9 @@ public class SampleAsyncController {
     @RequestMapping("/nio/one")
     public DeferredResult<ProcessingStatus> one() {
         DeferredResult<ProcessingStatus> deferredResult = new DeferredResult<ProcessingStatus>();
-        logger.info("Creating a new async timer task");
+        logger.info("Calling spring async task");
         asyncSampleService.processRequest(deferredResult);
-        logger.info("Timer task is scheduled. Returning DeferredResult");
+        logger.info("Call to async method is invoked");
         return deferredResult;
     }
 
