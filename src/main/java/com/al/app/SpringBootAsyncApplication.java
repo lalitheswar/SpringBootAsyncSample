@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @ComponentScan("com.al.app.*")
 public class SpringBootAsyncApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootAsyncApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootAsyncApplication.class, args);
+    }
 }

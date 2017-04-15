@@ -5,32 +5,32 @@ package com.al.app.dto;
  *
  */
 public class ProcessingStatus {
-	private int status;
-	private String message;
-	
-	public ProcessingStatus() {
-		status = -1;
-		message = "";
-	}
+    private int status;
+    private String message;
 
-	public ProcessingStatus(int status, String message) {
-		this.status = status;
-		this.message = message;
-	}
+    public ProcessingStatus() {
+        status = -1;
+        message = "";
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public ProcessingStatus(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

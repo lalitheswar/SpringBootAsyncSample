@@ -10,17 +10,18 @@ import com.al.app.dto.ProcessingStatus;
 
 @Service
 public class SpringAsyncSampleService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(SpringAsyncSampleService.class);
-	
-	@Async
-	public void processRequest(DeferredResult<ProcessingStatus> deferredResult) {
-		logger.info("Entering spring async method");
-		if(! deferredResult.isSetOrExpired()) {
-			ProcessingStatus processingStatus = new ProcessingStatus(200, "Successfully processed from async annotated method");
-			deferredResult.setResult(processingStatus);	
-		}
-		logger.info("Exiting from spring async method");
-	}
-	
+
+    private static final Logger logger = LoggerFactory.getLogger(SpringAsyncSampleService.class);
+
+    @Async
+    public void processRequest(DeferredResult<ProcessingStatus> deferredResult) {
+        logger.info("Entering spring async method");
+        if (!deferredResult.isSetOrExpired()) {
+            ProcessingStatus processingStatus = new ProcessingStatus(200,
+                    "Successfully processed from async annotated method");
+            deferredResult.setResult(processingStatus);
+        }
+        logger.info("Exiting from spring async method");
+    }
+
 }
