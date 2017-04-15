@@ -1,9 +1,11 @@
-package com.al.app.process;
+package com.al.app.service;
 
 import java.util.TimerTask;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.impl.SLF4JLogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.al.app.dto.ProcessingStatus;
@@ -14,7 +16,7 @@ import com.al.app.dto.ProcessingStatus;
  */
 public class ProcessingTask extends TimerTask {
 	
-	private Log log = SLF4JLogFactory.getLog("AsyncProcessingTask");
+	private static final Logger logger = LoggerFactory.getLogger(ProcessingTask.class);
 	
 	private DeferredResult<ProcessingStatus> deferredResult;
 	
@@ -25,17 +27,17 @@ public class ProcessingTask extends TimerTask {
 
 	@Override
 	public void run() {
-		log.info("Entering Async 'run' method");
+		logger.info("Entering Async 'run' method");
 		ProcessingStatus result = null;
 		if(deferredResult.isSetOrExpired()) {
-			log.info("DeferredResult is set. Cancelling further scheduling of task ...");
+			logger.info("DeferredResult is set. Cancelling further scheduling of task ...");
 			this.cancel();
 			return;
 		} else {
 			result = new ProcessingStatus(200, "Successful in processing request !!");
 			deferredResult.setResult(result);
-			log.info("Async method is successfully processed");
+			logger.info("Async method is successfully processed");
 		}
-		log.info("Exiting from Async 'run' method");
+		logger.info("Exiting from Async 'run' method");
 	}
 }
