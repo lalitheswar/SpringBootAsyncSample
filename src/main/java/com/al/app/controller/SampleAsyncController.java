@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.al.app.dto.ProcessingStatus;
+import com.al.app.service.LongExecutionService;
 import com.al.app.service.ProcessingTask;
 import com.al.app.service.SpringAsyncSampleService;
 
@@ -25,6 +26,9 @@ public class SampleAsyncController {
 
     @Autowired
     private SpringAsyncSampleService asyncSampleService;
+
+    @Autowired
+    private LongExecutionService longExecutionService;
 
     @RequestMapping("/nio/one")
     public DeferredResult<ProcessingStatus> one() {
@@ -47,6 +51,12 @@ public class SampleAsyncController {
         ProcessingTask task = new ProcessingTask(deferredResult);
         timer.schedule(task, 10, 50);
         logger.info("Timer task is scheduled. Returning DeferredResult");
+        return deferredResult;
+    }
+
+    @RequestMapping("/nio/three")
+    public DeferredResult<ProcessingStatus> three() {
+        DeferredResult<ProcessingStatus> deferredResult = longExecutionService.getData("/nio/three");
         return deferredResult;
     }
 }
