@@ -25,10 +25,9 @@ public class LongExecutionService {
         return deferredResult;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 100)
     void run() {
         List<String> keys = deferredResultManager.getCurrentKeys();
-        logger.info("Current number of keys to process: " + keys.size());
         for (String key : keys) {
             deferredResultManager.onProcessSuccess(key, getStatus(key));
         }

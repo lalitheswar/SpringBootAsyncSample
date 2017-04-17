@@ -1,6 +1,7 @@
 package com.al.app.controller;
 
 import java.util.Timer;
+import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.al.app.biz.entity.TransactionResponseEntity;
+import com.al.app.biz.service.TransactionService;
+import com.al.app.biz.util.TransactionContextEnum;
+import com.al.app.biz.util.TransactionToken;
 import com.al.app.dto.ProcessingStatus;
 import com.al.app.service.LongExecutionService;
 import com.al.app.service.ProcessingTask;
@@ -29,6 +34,9 @@ public class SampleAsyncController {
 
     @Autowired
     private LongExecutionService longExecutionService;
+    
+    @Autowired
+    private TransactionService transactionService;
 
     @RequestMapping("/nio/one")
     public DeferredResult<ProcessingStatus> one() {
@@ -59,4 +67,26 @@ public class SampleAsyncController {
         DeferredResult<ProcessingStatus> deferredResult = longExecutionService.getData("/nio/three");
         return deferredResult;
     }
+    
+    
+    
+    @RequestMapping("/nio/five")
+    public DeferredResult<TransactionResponseEntity> five() {
+        DeferredResult<TransactionResponseEntity> deferredResult = new DeferredResult<TransactionResponseEntity>();
+        
+        // Get a new transaction token
+        TransactionToken token = transactionService.getNewTransactionToken(TransactionContextEnum.RESERVE);
+        
+        // make a call to process transaction
+        CompletableFuture<TransactionResponseEntity> future = transactionService.processTransaction(token, 2);
+        
+        // add callback to set the deferred result value 
+        future.thenAccept(e -> {
+            deferredResult.setResult(e);
+        });
+        
+        // return the deferredResult
+        return deferredResult;
+    }
+    
 }
